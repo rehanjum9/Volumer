@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun VolumerScreen(vm: MainViewModel = viewModel()) {
     val settings by vm.settings.collectAsState()
@@ -53,7 +54,7 @@ private fun VolumerScreen(vm: MainViewModel = viewModel()) {
             Button(onClick = { vm.simulatePublic(); message = "Public mode test applied" }, modifier = Modifier.fillMaxWidth()) { Text("Test Public Mode (20%)") }
             OutlinedButton(onClick = { vm.simulateQuiet(); message = "Private/quiet test applied" }, modifier = Modifier.fillMaxWidth()) { Text("Test Private Return") }
             HorizontalDivider()
-            Button(onClick = { vm.markCurrentLocationPrivate { ok, text -> message = text } }, modifier = Modifier.fillMaxWidth()) { Text("Save Current Location as Private") }
+            Button(onClick = { vm.markCurrentLocationPrivate { _, text -> message = text } }, modifier = Modifier.fillMaxWidth()) { Text("Save Current Location as Private") }
             OutlinedButton(onClick = { vm.clearPrivatePlace(); message = "Private place removed" }, modifier = Modifier.fillMaxWidth()) { Text("Clear Private Place") }
             if (!vm.hasBackgroundLocation() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) Text("For geofencing while the app is closed, allow Location → Allow all the time in Android app settings.", style = MaterialTheme.typography.bodySmall)
             Text(message, style = MaterialTheme.typography.bodyMedium)
